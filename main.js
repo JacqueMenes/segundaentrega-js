@@ -32,20 +32,21 @@ const prenda7 = new Prenda(7,"Cadena con Dijes en forma de Corazon", "Dorado", 2
 const prenda8 = new Prenda(8,"Zapatos Carrie", "Azul", 15000, "zapatos.png")
 
 
-let productosEnCarrito = JSON.parse(localStorage.getItem("carrito")) || []
-let carrito = []
+let productosEnCarrito = JSON.parse(localStorage.getItem("catalogo")) || []
+let catalogo = []
 //Guardar carrito en el Storage
 //Revisa si existe en el local y lo trae 
-if(localStorage.getItem("carrito")){
-    carrito = JSON.parse(localStorage.getItem("carrito"))
+if(localStorage.getItem("catalogo")){
+    catalogo = JSON.parse(localStorage.getItem("catalogo"))
 }
 else{
-carrito.push(prenda1, prenda2, prenda3, prenda4, prenda5, prenda6, prenda7, prenda8)
-localStorage.setItem("carrito", JSON.stringify(carrito) )
+catalogo.push(prenda1, prenda2, prenda3, prenda4, prenda5, prenda6, prenda7, prenda8)
+localStorage.setItem("catalogo", JSON.stringify(catalogo) )
 }
 
 let divProductos = document.getElementById("productos")
 function mostrarCatalogo(array){
+    divProductos.innerHTML = ""
     array.forEach((prenda)=>{
         let nuevoProducto = document.createElement("div")
         nuevoProducto.setAttribute("class", "col")
@@ -103,7 +104,7 @@ btnGuardar.addEventListener("click", ()=>{
 //BtnMostrarCatalogo adjuntamos evento
 let btnMostrarCatalogo = document.getElementById("botonMostrar")
 btnMostrarCatalogo.addEventListener("click", ()=>{
-    mostrarCatalogo(carrito)
+    mostrarCatalogo(catalogo)
 })
 
 //Boton ocultar catalogo adjuntamos evento
@@ -125,15 +126,15 @@ function cargarProductosCarrito(array){
     // modalBody.innerHTML = ""
     array.forEach((productoCarrito)=>{
         modalBody.innerHTML += `
-        <div class="card border-primary mb-3" id ="productoCarrito${productoCarrito.id}" style="max-width: 540px;">
-            <img class="card-img-top" src="assets/${productoCarrito.imagen}" alt="${productoCarrito.articulo}">
-            <div class="card-body">
-                    <h4 class="card-title">${productoCarrito.articulo}</h4>
-                    <p class="card-text">${productoCarrito.color}</p>
-                    <p class="card-text">$${productoCarrito.precio}</p> 
-                    <button class= "btn btn-danger" id="botonEliminar"><i class="fas fa-trash-alt"></i></button>
-            </div>    
-        </div>`
+        <div class="card border-primary sm-2" id ="productoCarrito${productoCarrito.id}" style="max-width: 350px;">
+        <img class="card-img-top" src="assets/${productoCarrito.imagen}" alt="${productoCarrito.articulo}">
+        <div class="card-body">
+                <h4 class="card-title">${productoCarrito.articulo}</h4>
+                <p class="card-text">${productoCarrito.color}</p>
+                <p class="card-text">$${productoCarrito.precio}</p> 
+                <button class= "btn btn-danger" id="botonEliminar"><i class="fas fa-trash-alt"></i></button>
+        </div>    
+    </div>`
     })
     //calcular el total
     compraTotal(array)
