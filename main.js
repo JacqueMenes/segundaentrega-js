@@ -98,7 +98,7 @@ function nuevaPrenda(array){
 //btnGuardar adjuntamos evento
 let btnGuardar = document.getElementById("botonAgregar")
 btnGuardar.addEventListener("click", ()=>{
-    nuevaPrenda(carrito)
+    nuevaPrenda(catalogo)
 })
 
 //BtnMostrarCatalogo adjuntamos evento
