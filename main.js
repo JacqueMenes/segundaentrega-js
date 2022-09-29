@@ -40,15 +40,12 @@ if(localStorage.getItem("carrito")){
     carrito = JSON.parse(localStorage.getItem("carrito"))
 }
 else{
-    ("Seteando por primera vez el array")
-
 carrito.push(prenda1, prenda2, prenda3, prenda4, prenda5, prenda6, prenda7, prenda8)
 localStorage.setItem("carrito", JSON.stringify(carrito) )
 }
 
 let divProductos = document.getElementById("productos")
 function mostrarCatalogo(array){
-    
     array.forEach((prenda)=>{
         let nuevoProducto = document.createElement("div")
         nuevoProducto.setAttribute("class", "col")
@@ -79,16 +76,6 @@ function agregarAlCarrito(prenda){
 function botonOcultar(){
     divProductos.innerHTML = ""
 } 
-
-// // //function agregar nuevo Producto
-// function nuevaPrenda(array){
-//     let articuloIngresado = prompt("Ingrese el articulo")
-//     let colorIngresado = prompt("Ingrese el color")
-//     let precioIngresado = parseInt(prompt("Ingrese el precio"))
-//     let prendaCreada = new Prenda (carrito.length+1, articuloIngresado, colorIngresado, precioIngresado)
-//     array.push(prendaCreada)
-    
-// }
 
 //function nuevaPrenda actualiza a inputs!
 function nuevaPrenda(array){
@@ -137,21 +124,16 @@ function cargarProductosCarrito(array){
 
     // modalBody.innerHTML = ""
     array.forEach((productoCarrito)=>{
-
         modalBody.innerHTML += `
         <div class="card border-primary mb-3" id ="productoCarrito${productoCarrito.id}" style="max-width: 540px;">
-            <img class="card-img-top" src="assets/${productoCarrito.imagen}" alt="${productoCarrito.titulo}">
+            <img class="card-img-top" src="assets/${productoCarrito.imagen}" alt="${productoCarrito.articulo}">
             <div class="card-body">
-                    <h4 class="card-title">${productoCarrito.titulo}</h4>
-                
+                    <h4 class="card-title">${productoCarrito.articulo}</h4>
+                    <p class="card-text">${productoCarrito.color}</p>
                     <p class="card-text">$${productoCarrito.precio}</p> 
                     <button class= "btn btn-danger" id="botonEliminar"><i class="fas fa-trash-alt"></i></button>
             </div>    
-        
-        
-        </div>
-`
-
+        </div>`
     })
     //calcular el total
     compraTotal(array)
@@ -159,7 +141,6 @@ function cargarProductosCarrito(array){
 
 function compraTotal(array){
     let acumulador = 0
-
     acumulador = array.reduce((acumulador, productoCarrito)=>{
         return acumulador + productoCarrito.precio
     },0)
