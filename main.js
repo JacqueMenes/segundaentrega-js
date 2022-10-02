@@ -31,18 +31,19 @@ const prenda7 = new Prenda(7,"Cadena con Dijes en forma de Corazon", "Dorado", 2
 
 const prenda8 = new Prenda(8,"Zapatos Carrie", "Azul", 15000, "zapatos.png")
 
+//DESESTRUCTURACION CON ALIAS
+let {articulo:article, precio:price} = prenda2
+console.log(article)
+console.log(price)
 
 let productosEnCarrito = JSON.parse(localStorage.getItem("catalogo")) || []
 let catalogo = []
 //Guardar carrito en el Storage
 //Revisa si existe en el local y lo trae 
-if(localStorage.getItem("catalogo")){
-    catalogo = JSON.parse(localStorage.getItem("catalogo"))
-}
-else{
-catalogo.push(prenda1, prenda2, prenda3, prenda4, prenda5, prenda6, prenda7, prenda8)
-localStorage.setItem("catalogo", JSON.stringify(catalogo) )
-}
+
+//Operador ternario
+localStorage.getItem("catalogo") ? catalogo = JSON.parse(localStorage.getItem("catalogo")) : catalogo.push(prenda1, prenda2, prenda3, prenda4, prenda5, prenda6, prenda7, prenda8), localStorage.setItem("catalogo", JSON.stringify(catalogo))
+
 
 let divProductos = document.getElementById("productos")
 function mostrarCatalogo(array){
@@ -87,6 +88,12 @@ function nuevaPrenda(array){
     array.push(prendaCreada)
     //Actualizamos Storage
     localStorage.setItem("carrito", JSON.stringify(array))
+    //DESESTRUCTURACION
+    let {id, articulo, color, precio} = prendaCreada
+    console.log(id)
+    console.log(articulo)
+    console.log(color)
+    console.log(precio)
 
     //Provisorio resetear form
     articuloInput.value = ""
@@ -124,8 +131,8 @@ botonCarrito.addEventListener("click", ()=>{
 function cargarProductosCarrito(array){
 
     // modalBody.innerHTML = ""
-    array.forEach((productoCarrito)=>{
-        modalBody.innerHTML += `
+    array.forEach((productoCarrito)=>{ // OPERADOR ++
+        modalBody.innerHTML += ` 
         <div class="card border-primary sm-2" id ="productoCarrito${productoCarrito.id}" style="max-width: 350px;">
         <img class="card-img-top" src="assets/${productoCarrito.imagen}" alt="${productoCarrito.articulo}">
         <div class="card-body">
@@ -145,10 +152,6 @@ function compraTotal(array){
     acumulador = array.reduce((acumulador, productoCarrito)=>{
         return acumulador + productoCarrito.precio
     },0)
-    if(acumulador == 0){
-        parrafoCompra.innerHTML = `<strong>No hay productos en el carrito</strong>`
-    }
-    else{
-        parrafoCompra.innerHTML = `El total de su carrito es ${acumulador}`
-    }
+    //OPERADOR TERNARIO
+    acumulador == 0 ? parrafoCompra.innerHTML = `<strong>No hay productos en el carrito</strong>` : parrafoCompra.innerHTML = `El total de su carrito es ${acumulador}`
 }
